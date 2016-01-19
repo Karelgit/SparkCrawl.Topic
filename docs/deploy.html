@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>部署</title>
+</head>
+<body>
+<div>
+    <h1>安装步骤</h1>
+    <h2>一、部署基础服务</h2>
+    <hr>
+    <div style="text-indent: 35px">
+        <p>1、redis服务</p>
+        <p>2、mysql服务</p>
+        <p>3、tachyon集群</p>
+    </div>
+    <h2>二、配置</h2>
+    <hr>
+    <div style="text-indent: 35px">
+        <p>1、配置初始种子路径</p>
+        <p>2、配置基础服务地址</p>
+    </div>
+    <h2>三、构建</h2>
+    <hr>
+    <div style="text-indent: 35px">
+        <p>在程序目录下运行 mvn package -P clusterdep -Dmaven.test.skip=true</p>
+    </div>
+
+    <h2>四、运行</h2>
+    <hr>
+    <div style="text-indent: 35px">
+        <p>运行参数 -depth 3 -pass 3 -tid SparkCrawler201601081341 -seedpath /SparkCrawler/SparkCrawler201601081341/seeds/seed.json -type topic -recalldepth 3 -templateDir /SparkCrawler/templates/ -clickregexDir /SparkCrawler/clickregex/  -mode local</p>
+    </div>
+</div>
+</body>
+</html>

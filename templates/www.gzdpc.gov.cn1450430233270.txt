@@ -1,0 +1,268 @@
+www.gzdpc.gov.cn
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN">
+<head>
+<title>
+</title>
+</head>
+<body>
+<div id="gwdshare_s" style="display: block;">
+<div id="gwdshare_l" style="display: none;">
+<div id="gwdshare_l_c">
+<h6>
+分享到
+<b>
+</b>
+</h6>
+<ul>
+<li>
+<a href="#" class="gwds_xinhua xinhua MoreShareLink_24">
+新华微博
+</li>
+<li>
+<a href="#" class="gwds_weixin weixin MoreShareLink_24">
+微信
+</li>
+<li>
+<a href="#" class="gwds_qzone qqkj MoreShareLink_24">
+QQ空间
+</li>
+<li>
+<a href="#" class="gwds_renren rrw MoreShareLink_24">
+人人网
+</li>
+<li>
+<a href="#" class="gwds_kaixin001 kxw MoreShareLink_24">
+开心网
+</li>
+<li>
+<a href="#" class="gwds_douban db MoreShareLink_24">
+豆瓣网
+</li>
+</ul>
+<a href="//share.gwd.gov.cn/" class="goWebsite">
+分享
+</div>
+</div>
+</div>
+﻿
+<table width="1002" border="0" cellspacing="0" cellpadding="0" align="center">
+<tbody>
+<tr>
+<td align="center" valign="middle">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td align="center" valign="middle">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="109" height="28" align="right">
+今天是：
+</td>
+<td width="170" align="left">
+<div>
+2015年12月18日星期五
+</div>
+</td>
+<td width="38">
+</td>
+<td width="200" align="left" valign="middle">
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="100%" height="205" border="0" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td align="center" valign="middle">
+<embed type="application/x-shockwave-flash" src="/jcms/jcms_files/jcms1/web2/site/flash/0/1205251435032411.swf" flashvars="data=/flash/0/top.xml" menu="true" loop="true" play="true" height="269" width="1004" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer">
+</td>
+</tr>
+</tbody>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td align="center" valign="middle">
+</td>
+</tr>
+</tbody>
+</table>
+<table width="800" border="0" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<table cellspacing="0" cellpadding="0" border="0" align="left">
+<tbody>
+<tr>
+<td>
+<a href="/index.html" class="bt_link">
+首页
+</td>
+<td>
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
+<tbody>
+<tr>
+<td>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="800" border="0" cellspacing="0" cellpadding="0" style="border:#E6E6E6 3px solid; ">
+<tbody>
+<tr>
+<td height="280" align="left" valign="top">
+<table width="100%" id="article" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td height="28">
+</td>
+</tr>
+<tr>
+<td align="center" class="title" height="30" style="padding-bottom:15px;padding-left:15px;padding-right:15px;font-family:宋体; font-weight:bold; font-size:21px;color:#990033;">
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" align="center" bgcolor="#E6E6E6" width="90%">
+<tbody>
+<tr>
+<td width="35%" align="right">
+</td>
+<td align="left" width="30%">
+字号：[
+<a style="cursor:hand" href="javascript:doZoom(16)">
+大
+<a style="cursor:hand" href="javascript:doZoom(14)">
+中
+<a style="cursor:hand" href="javascript:doZoom(12)">
+小
+]
+</td>
+<td align="left" width="35%">
+<div id="gwdShare_win_4" style="width:100px;float: left;position: relative;">
+分享
+<div id="gwdShareUpDown_div" class="gwdShareArrow">
+</div>
+<div id="gwdShare_con_4" style="display: none;height:118px;">
+<div class="gwdshare_t gwds_tools_24 get-codes-gwdshare">
+<a class="gwds_people gws_title_button" href="#">
+人民微博
+<a class="gwds_tsina gws_title_button" href="#">
+新浪微博
+<a class="gwds_tqq gws_title_button" href="#">
+腾讯微博
+</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td style="padding-left:50px;padding-right:50px;padding-top:20px;font-size:10.5pt; line-height:26px;" class="bt_content" height="280" valign="top">
+<div id="zoom" class="bt_content">
+</div>
+</td>
+</tr>
+<tr>
+<td align="left" height="10" style="font-size:10.5pt;padding-left:60px;">
+</td>
+</tr>
+<tr>
+<td height="30" align="center" valign="middle">
+上一篇:
+</td>
+</tr>
+<tr>
+<td height="26" align="right" valign="top" style="padding-right:40px;font-size:10.5pt;color:#e10000;">
+【
+<a href="#top" style="cursor:hand; font-size:10.5pt;color:#e10000;">
+返回顶部
+】【
+<a href="javascript:window.print()" style="cursor:hand; font-size:10.5pt;color:#e10000;">
+打印本稿
+】【
+<a href="javascript:window.close()" style="cursor:hand; font-size:10.5pt;color:#e10000;">
+关闭本页
+】
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td height="4" align="center" valign="middle" bgcolor="#ababab">
+</td>
+</tr>
+<tr>
+<td height="21" align="center" valign="middle" bgcolor="#ececec">
+<center>
+<a href="mailto:%20xxc@gzic.gov.cn">
+联系我们
+|
+<a href="/col/col866/index.html">
+网站地图
+|
+<a href="/art/2012/6/15/art_809_36461.html">
+隐私及版权说明
+|
+<a href="/art/2015/4/23/art_941_109610.html">
+帮助信息
+|
+<a target="_top" href="javascript:window.external.addFavorite('http://www.gzdpc.gov.cn','贵州省发展和改革委员');">
+加入收藏
+|
+<a href="#" onclick="this.style.behavior='url(#default#homepage)';this.setHomePage('http://www.gzdpc.gov.cn');">
+设为首页
+</center>
+</td>
+</tr>
+<tr>
+<td height="21" align="center" valign="middle">
+<div style="text-align: center">
+黔ICP备05002960号www.gzdpc.gov.cn
+</div>
+<div style="text-align: center">
+贵州省发展和改革委员会主办贵州省信息中心承办
+</div>
+<div style="text-align: center">
+服务联系电话：0851-852833310851-85281611
+</div>
+<div style="text-align: center">
+省发展改革委首问责任窗口联系咨询电话：0851-852833310851-85285073
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</iframe>
+<a href="http://www.hanweb.com" style="display:none">
+ProducedBy大汉网络大汉版通发布系统
+</body>
+</html>
