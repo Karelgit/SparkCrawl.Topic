@@ -1,25 +1,12 @@
-import com.gengyun.crawler.MyUrl;
-import com.gengyun.entry.OnSparkInstanceFactory;
-import com.gengyun.metainfo.CrawlDatum;
 import com.gengyun.metainfo.Crawldb;
-import com.gengyun.utils.PropertyHelper;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat;
-import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.api.java.function.Function;
-import org.apache.spark.api.java.function.Function2;
 import org.apache.spark.api.java.function.PairFunction;
-import org.apache.spark.sql.DataFrame;
-import org.apache.spark.sql.DataFrameWriter;
-import org.apache.spark.sql.SQLContext;
-import org.apache.spark.sql.SaveMode;
 import scala.Tuple2;
 
-import java.io.IOException;
 import java.util.Properties;
 
 /**
@@ -32,18 +19,6 @@ public class ReadTachyon {
                 Class.forName("com.gengyun.metainfo.CrawlDatum"),
                 Class.forName("com.gengyun.metainfo.Crawldb")
         });
-
-
-        Properties properties = new Properties();
-        properties.setProperty("user", "root");
-        properties.setProperty("password", "root");
-        properties.setProperty("useUnicode", "true");
-        properties.setProperty("characterEncoding", "utf8");
-        properties.setProperty("autoReconnect", "true");
-        properties.setProperty("rewriteBatchedStatements", "true");
-        PropertyHelper helper = new PropertyHelper("db");
-        String dburl = helper.getValue("db.url");
-        String table = helper.getValue("db.table");
 
         JavaSparkContext jsc = new JavaSparkContext(sparkConf);
 

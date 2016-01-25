@@ -3,7 +3,6 @@ package com.gengyun.huanghai;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gengyun.utils.FileReader;
@@ -59,28 +58,6 @@ public class recursive_width {
         return page;
     }
 
-    //打印HtmlPage的页码
-    public static String printPageNo(HtmlPage hp) {
-        List<String> pageMark = new ArrayList<>();
-        pageMark.add("//*[@id=\"11627\"]/table/tbody/tr/td/table/tbody/tr/td[6]/input");
-        pageMark.add("/html/body/div[2]/div[2]/div[2]/p/span[1]");
-        DomElement de = null;
-        for (String s : pageMark) {
-            if(hp.getByXPath(s).size() > 0)    {
-                de = (DomElement) hp.getByXPath(s).get(0);
-                break;
-            }
-        }
-
-       /* //贵阳
-        String pNoXpath1 = "/*//*[@id=\"11627\"]/table/tbody/tr/td/table/tbody/tr/td[6]/input";
-        //南明
-//        String pNoXpath2 = "/html/body/div[2]/div[2]/div[2]/p/span[1]";
-
-        DomElement pageNo1 = (DomElement) hp.getByXPath(pNoXpath1).get(0);*/
-        return "第".concat(de.asText()).concat("页");
-    }
-
     //针对Spark爬虫，栏目页判断，进点击程序
     public static boolean columnPageJudge(HtmlPage hp, List<String> regexList) {
         List<Tag> tagList = new ArrayList<Tag>();
@@ -106,18 +83,8 @@ public class recursive_width {
         return columnFlag;
     }
 
-    public static List<Tag> initTagList(String url, List<String> regexList, WebClient webClient) {
+    public static List<Tag> initTagList(HtmlPage hp, List<String> regexList, WebClient webClient) {
         List<Tag> tagList = new ArrayList<Tag>();
-        HtmlPage hp = null;
-        try {
-            for (String s : regexList) {
-                System.out.println(s);
-            }
-            hp = webClient.getPage(url);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         Document document = Jsoup.parse(hp.asXml());
         Document document1 = Jsoup.parse(hp.asXml());
         document.getElementsByTag("meta").remove();
@@ -131,103 +98,84 @@ public class recursive_width {
             while (m.find()) {
                 if(m.group().matches(regexList.get(i))) {
                     String xpath = XpathParser.getXpath(document1, m.group()).get(0) + "|";
-                    System.out.println("xpath: " + xpath);
+//                    System.out.println("xpath: " + xpath);
                     Tag tag = new Tag();
                     tag.setStatus(0);
                     tag.setXpath(xpath);
                     tagList.add(tag);
-                    System.out.println("tag包括：" + m.group());
+//                    System.out.println("tag包括：" + m.group());
                 }
             }
         }
-        System.out.println("找到的tag数：" + tagList.size());
         return tagList;
     }
 
-    //方法一：获得tagListBlock
-    public static Map<Integer, List<Tag>> getTagListBlock(int k, int layers, String url, List<String> regexList, Map<Integer, List<Tag>> tagListBlock, WebClient webClient) {
-        List<Tag> initTagList = initTagList(url, regexList, webClient);
-        if(initTagList.size() !=0)  {
-            int kc = k;
-            while (kc > 1) {
-                if (kc + 1 <= layers) {
-                    for (int i = 0; i < tagListBlock.get(kc + 1).size(); i++) {
-                        for (int j = 0; j < initTagList.size(); j++) {
-                            Tag tag = new Tag();
-                            tag.setXpath(tagListBlock.get(kc + 1).get(i).getXpath() + initTagList.get(j).getXpath() + "|");
-                            tag.setStatus(1);
-                            tagListBlock.get(kc).add(tag);
-                        }
-                    }
-                } else {
-                    tagListBlock.put(k, initTagList);
+    public static boolean newPageJudge(List<String> pageList,HtmlPage htmlPage)    {
+        boolean uniqueFlag = true;
+        Document doc = Jsoup.parse(htmlPage.asXml());
+        if(pageList.size() == 0) {
+            uniqueFlag = true;
+        }else {
+            for(int i=0; i<pageList.size(); i++)   {
+                MinHashCompare minHashCompare = new MinHashCompare();
+                Document inner_doc = Jsoup.parse(pageList.get(i));
+                try {
+                    uniqueFlag = uniqueFlag && !minHashCompare.isHtmlSimilar(inner_doc,doc,0.9999f);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                kc--;
             }
-            return tagListBlock;
-        }else   {
-            return tagListBlock;
         }
-
+        return uniqueFlag;
     }
 
-    //方法二：点击标签过程
-    public static List<String> traverseClick(int m, int k, String url, HtmlPage upperPage,
-                                               Map<Integer, List<Tag>> tagListBlock, WebClient webClient, boolean firstEntry) throws Exception {
+    public static List<String> traverse_width(int k, int layers,String url, List<String> regexList, Map<Integer,List<Tag>> tagListBlock,WebClient webClient, HtmlPage upperPage, boolean firstEntry) throws  Exception{
         List<String> pageList = new ArrayList<String>();
-
-        if(tagListBlock.get(k).size() == 0)   {
-//            System.out.println(printPageNo(upperPage)+"已加入pageList");
-            pageList.add(upperPage.asXml());
-        }else   {
-//            System.out.println(printPageNo(upperPage)+"已加入pageList");
-            pageList.add(upperPage.asXml());
-            int kd = k;
-            while(kd > 1) {
-                for (; m < tagListBlock.get(kd).size(); m++) {
+        pageList.add(upperPage.asXml());
+        int num = k;
+        System.out.print("第" + (num-k+1) + "层累计页数：");
+        System.out.println(pageList.size());
+        while (k > 0)   {
+            if(k+1 <= layers)  {
+                for(int i=0; i < tagListBlock.get(k+1).size(); i++) {
                     HtmlPage indexPage = null;
-                    if (firstEntry) {
+                    if(firstEntry == true)  {
                         indexPage = upperPage;
                         firstEntry = false;
-                    } else {
-                        try {
-                            indexPage = webClient.getPage(url);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                    }else   {
+                        indexPage = webClient.getPage(url);
                     }
-                    HtmlPage htmlPage = executeTag(indexPage, tagListBlock.get(kd), m);
-//                    printPageNo(htmlPage);
-                    Document doc = Jsoup.parse(htmlPage.asXml());
-                    if (pageList.isEmpty()) {
-                        pageList.add(htmlPage.asXml());
-                    } else {
-                        boolean uniqueFlag = true;
-                        for (int i = 0; i < pageList.size(); i++) {
-                            MinHashCompare minHashCompare = new MinHashCompare();
-                            Document inner_doc = Jsoup.parse(pageList.get(i));
-                            try {
-                                uniqueFlag = uniqueFlag && !minHashCompare.isHtmlSimilar(inner_doc, doc, 0.999999999f);
-                            } catch (IOException e) {
-                                e.printStackTrace();
+
+                    HtmlPage exhp = executeTag(indexPage, tagListBlock.get(k + 1), i);
+                    if(newPageJudge(pageList,exhp)) {
+                        pageList.add(exhp.asXml());
+                        System.out.print("第" + (num-k+1) + "层累计页数：");
+                        System.out.println(pageList.size());
+                        if(k>1) {
+                            List<Tag> initTagList = initTagList(exhp, regexList, webClient);
+                            for(int j=0; j < initTagList.size(); j++) {
+                                Tag tag = new Tag();
+                                tag.setXpath(tagListBlock.get(k + 1).get(i).getXpath() + initTagList.get(j).getXpath() + "|");
+                                tag.setStatus(1);
+                                tagListBlock.get(k).add(tag);
                             }
-                        }
-                        if (uniqueFlag == true) {
-//                            System.out.println(printPageNo(htmlPage)+"已加入pageList");
-                            pageList.add(htmlPage.asXml());
                         }
                     }
                 }
-                m = 0;
-                kd--;
+            }else {
+                tagListBlock.put(k,initTagList(upperPage,regexList,webClient));
             }
+
+            k--;//layers param decrease
         }
-        System.out.println("pageList size:" + pageList.size());
+        System.out.println("page size: " + pageList.size());
+        /*for (HtmlPage htmlPage : pageList) {
+            System.out.println(htmlPage.asText());
+        }*/
         return pageList;
     }
 
-
-    public static Params getDynamicPages(String Url, List<String> regexList,int recall_depth) throws Exception {
+    public static Params getDynamicPages(String Url, List<String> regexList, int recalldepth) throws Exception {
         LogFactory.getFactory().setAttribute("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
         String url = Url;
         WebClient webClient = new WebClient(BrowserVersion.CHROME);
@@ -241,9 +189,8 @@ public class recursive_width {
         webClient.setAjaxController(new NicelyResynchronizingAjaxController());
         //k,控制访问层数;m,叶子节点TagList循环控制
         Params params = new Params();
-        params.setM(0);
-        params.setK(recall_depth);
-        params.setLayer(recall_depth);
+        params.setK(recalldepth);
+        params.setLayer(recalldepth);
         Map<Integer, List<Tag>> tagListBlock = new HashMap<Integer, List<Tag>>();
         //初始化标签列表
         for (int i = params.getK(); i > 0; i--) {
@@ -254,6 +201,53 @@ public class recursive_width {
         return params;
     }
 
+    public static void main(String[] args) throws Exception {
+
+        LogFactory.getFactory().setAttribute("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
+//        贵阳
+//          String url = "http://www.gygov.gov.cn/col/col10682/index.html";
+//        String url = "http://www.gygov.gov.cn/col/col18321/index.html";
+//        String url = "http://www.gygov.gov.cn/col/col18321/index.html";
+//        String url = "http://www.gygov.gov.cn/col/col10683/index.html";
+//        String url = "http://www.gygov.gov.cn/col/col10687/index.html";
+
+//        String url = "http://www.nanming.gov.cn/nmxw/gzdt/zwxx/index.shtml";
+//        String url = "http://gz.hrss.gov.cn/col/col43/index.html";
+//        String url = "http://www.gzdpc.gov.cn/col/col396/index.html";
+//        String url = "http://gzgy.lss.gov.cn/col/col78/index.html";
+        //都匀
+//        String url = "http://www.duyun.gov.cn/fzlm/hdmb/xxgkml/xxgklb/index.shtml?organId=2,082&id=1";
+        //贵州发改委
+//        String url = "http://www.gzdpc.gov.cn/col/col406/index.html";
+        String url = "http://www.gzdpc.gov.cn/col/col397/index.html";
+//        String url = "http://www.gzdpc.gov.cn/col/col406/index.html";
+        WebClient webClient = new WebClient(BrowserVersion.CHROME);
+        webClient.getOptions().setThrowExceptionOnScriptError(false);
+        webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
+        webClient.getOptions().setJavaScriptEnabled(true);
+        webClient.setJavaScriptTimeout(3600 * 1000);
+        webClient.getOptions().setRedirectEnabled(true);
+        webClient.getOptions().setTimeout(3600 * 1000);
+        webClient.waitForBackgroundJavaScript(600 * 1000);
+        webClient.setAjaxController(new NicelyResynchronizingAjaxController());
+        HtmlPage indexPage = webClient.getPage(url);
+
+        Long t1 = System.currentTimeMillis();
+        List<String> regexList = new ArrayList<>();
+        try {
+            regexList = FileReader.readFile("/opt/regex.config");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        boolean firstEntry = true;
+        Params params = recursive_width.getDynamicPages(url, regexList,3);
+        /*Map<Integer, List<Tag>> tagListBlock1 = getTagListBlock(params.getK(), params.getLayer(), url, regexList, params.getTagListBlock(), params.getWebClient());
+        params.setTagListBlock(tagListBlock1);
+        traverseClick(params.getM(), params.getK(), url, indexPage, params.getTagListBlock(), params.getWebClient(), firstEntry);*/
+        traverse_width(params.getK(),params.getLayer(),url,regexList,params.getTagListBlock(),params.getWebClient(),indexPage,firstEntry);
+        Long t2 = System.currentTimeMillis();
+        System.out.println(t2 - t1);
+    }
 }
 
 

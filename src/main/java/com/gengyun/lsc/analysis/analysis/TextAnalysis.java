@@ -31,7 +31,6 @@ public class TextAnalysis implements Serializable {
                 List<Tuple2<Text, Crawldb>> ans = new ArrayList<Tuple2<Text, Crawldb>>();
                 List<BaseAnalysisURL> baseAnalysisURLList = new ArrayList<>();
 
-
                 //初始化
                 AnalysisNavigation analysisNavigation = new AnalysisNavigation();
 
@@ -50,6 +49,7 @@ public class TextAnalysis implements Serializable {
                 boolean tag = oldCrawldb.isTag();
                 boolean fetched = oldCrawldb.isFetched();
 
+//                System.out.println("*********url******** :" + url);
                 BaseAnalysisURL oldUrl = new BaseAnalysisURL(url, title, date, html);
 
 

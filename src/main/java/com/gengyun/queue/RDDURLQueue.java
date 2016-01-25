@@ -5,7 +5,6 @@ import com.gengyun.entry.OnSparkInstanceFactory;
 import com.gengyun.metainfo.Crawldb;
 import com.gengyun.utils.CommonUtils;
 import com.gengyun.utils.LogManager;
-import com.gengyun.utils.PropertyHelper;
 import org.apache.hadoop.io.Text;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
@@ -25,12 +24,18 @@ import java.io.Serializable;
  */
 public class RDDURLQueue implements Serializable {
     private LogManager logger = new LogManager(RDDURLQueue.class);
-    private final static PropertyHelper helper = new PropertyHelper("db");
-    private final static String tachyonUrl = helper.getValue("tachyonUrl");
+   // private final static PropertyHelper helper = new PropertyHelper("db");
+    private static String tachyonUrl/* = helper.getValue("tachyonUrl")*/;
 //    private BlockingQueue<BaseURL> queue = new LinkedBlockingQueue<BaseURL>();
 
-    private static final int batchsize = 100;
 
+    private static int batchsize;
+
+
+    public RDDURLQueue(String tachyonUrl,int batchsize) {
+        this.tachyonUrl=tachyonUrl;
+        this.batchsize=batchsize;
+    }
 
     public JavaPairRDD<Text, Crawldb> nextBatch() throws IOException {
         JavaSparkContext jsc = OnSparkInstanceFactory.getSparkContext();
@@ -86,11 +91,11 @@ public class RDDURLQueue implements Serializable {
         top100laterRDD.values().saveAsObjectFile(tmpout.toString());
 
 
-        if (CommonUtils.exit("/toCrawl/current")) {
-            if (CommonUtils.exit("/toCrawl/old")) CommonUtils.remove("/toCrawl/old");
-            CommonUtils.rename("/toCrawl/current", "/toCrawl/old");
-            CommonUtils.remove("/toCrawl/current");
-            CommonUtils.rename(tmpout.getPath(), "/toCrawl/current");
+        if (CommonUtils.exit("/toCrawl/current",tachyonUrl)) {
+            if (CommonUtils.exit("/toCrawl/old",tachyonUrl)) CommonUtils.remove("/toCrawl/old",tachyonUrl);
+            CommonUtils.rename("/toCrawl/current", "/toCrawl/old",tachyonUrl);
+            CommonUtils.remove("/toCrawl/current",tachyonUrl);
+            CommonUtils.rename(tmpout.getPath(), "/toCrawl/current",tachyonUrl);
         }
 
 
@@ -98,7 +103,7 @@ public class RDDURLQueue implements Serializable {
     }
 
     public boolean hasMoreUrls() throws IOException {
-        return CommonUtils.exit("/toCrawl");
+        return CommonUtils.exit("/toCrawl",tachyonUrl);
     }
 
     public void putNextUrls(JavaPairRDD<Text, Crawldb> nextUrls) throws IOException {
@@ -107,7 +112,7 @@ public class RDDURLQueue implements Serializable {
 
         jsc.hadoopConfiguration().setBoolean("mapreduce.fileoutputcommitter.marksuccessfuljobs", false);
         //  CommonUtils.lockToCrawl();
-        if (CommonUtils.exit("/toCrawl/current")) {
+        if (CommonUtils.exit("/toCrawl/current",tachyonUrl)) {
             /*** 合并队列中数据 队列内部去重并存储**/
             JavaRDD<Crawldb> originRDD = jsc.objectFile(tachyonUrl + "/toCrawl/current");
 
@@ -137,11 +142,11 @@ public class RDDURLQueue implements Serializable {
                 }
             }).values().saveAsObjectFile(tmpout.toString());
 
-            if (CommonUtils.exit("/toCrawl/current")) {
-                if (CommonUtils.exit("/toCrawl/old")) CommonUtils.remove("/toCrawl/old");
-                CommonUtils.rename("/toCrawl/current", "/toCrawl/old");
-                CommonUtils.remove("/toCrawl/current");
-                CommonUtils.rename(tmpout.getPath(), "/toCrawl/current");
+            if (CommonUtils.exit("/toCrawl/current",tachyonUrl)) {
+                if (CommonUtils.exit("/toCrawl/old",tachyonUrl)) CommonUtils.remove("/toCrawl/old",tachyonUrl);
+                CommonUtils.rename("/toCrawl/current", "/toCrawl/old",tachyonUrl);
+                CommonUtils.remove("/toCrawl/current",tachyonUrl);
+                CommonUtils.rename(tmpout.getPath(), "/toCrawl/current",tachyonUrl);
             }
 
 
@@ -160,8 +165,8 @@ public class RDDURLQueue implements Serializable {
         /*if (tfs.exist(new TachyonURI("/toCrawl"))) {
             tfs.delete(new TachyonURI("/toCrawl"), true);
         }*/
-        CommonUtils.remove("/toCrawl");
-        return !CommonUtils.exit("/toCrawl"); //queue.isEmpty();
+        CommonUtils.remove("/toCrawl",tachyonUrl);
+        return !CommonUtils.exit("/toCrawl",tachyonUrl); //queue.isEmpty();
     }
 
 }

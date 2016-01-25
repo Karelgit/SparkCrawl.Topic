@@ -1,6 +1,7 @@
 package com.gengyun.flter;
 
 import com.gengyun.metainfo.CrawlDatum;
+import com.gengyun.metainfo.Crawldb;
 import org.apache.hadoop.io.Text;
 import org.apache.spark.api.java.function.Function;
 import scala.Tuple2;
@@ -19,12 +20,16 @@ public class PostFixFilter implements Serializable {
 
     }
 
-    public Function<Tuple2<Text, CrawlDatum>, Boolean> filter() {
-        Function<Tuple2<Text, CrawlDatum>, Boolean> result = new Function<Tuple2<Text, CrawlDatum>, Boolean>() {
+    public Function<Tuple2<Text, Crawldb>, Boolean> filterPostFix() {
+        Function<Tuple2<Text, Crawldb>, Boolean> result = new Function<Tuple2<Text, Crawldb>, Boolean>() {
             @Override
-            public Boolean call(Tuple2<Text, CrawlDatum> tuple2) throws Exception {
+            public Boolean call(Tuple2<Text, Crawldb> tuple2) throws Exception {
                 String urlStr = tuple2._1().toString();
-                if (postfix.contains(urlStr.substring(urlStr.lastIndexOf(".") + 1))) {
+                boolean flag = false;
+                for (String s : postfix) {
+                    flag = postfix.contains(urlStr.substring(urlStr.lastIndexOf("."))) || flag;
+                }
+                if (flag) {
                     return false;
                 } else
                     return true;

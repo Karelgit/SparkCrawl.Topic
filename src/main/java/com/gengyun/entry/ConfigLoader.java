@@ -5,13 +5,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.FileReader;
 import java.io.IOException;
 
 import com.gengyun.metainfo.Crawldb;
 import com.gengyun.urlfilter.UrlDepthFilter;
 import com.gengyun.utils.LogManager;
-import com.gengyun.utils.PropertyHelper;
 import com.gengyun.utils.ReadFromTachyon;
 import org.apache.hadoop.io.Text;
 import org.codehaus.jettison.json.JSONArray;
@@ -28,18 +26,16 @@ import tachyon.client.TachyonFS;
 public class ConfigLoader {
     private LogManager logger = new LogManager(ConfigLoader.class);
     private JSONObject jsonObject;
-    private final static PropertyHelper helper = new PropertyHelper("db");
-    private final static String tachyonUrl = helper.getValue("tachyonUrl");
+    //private final static PropertyHelper helper = new PropertyHelper("db");
+   // private final static String tachyonUrl = helper.getValue("tachyonUrl");
     //public WriteType writeType = WriteType.CACHE_THROUGH;
 
 
-    private void loadSeedConfigFile(String inputFilePath, String tid, String starttime) {
+    private void loadSeedConfigFile(String inputFilePath, String tid, String starttime,String tachyonUrl) {
         // JSONParser parser = new JSONParser();
         try {
             TachyonFS fs = TachyonFS.get(new TachyonURI(tachyonUrl));
             jsonObject = new JSONObject(ReadFromTachyon.getfilecontent(fs, inputFilePath));
-
-
             // List<String> seedingUrls = (List<String>) jsonObject.get("seeding_url");
             TachyonURI domainsPath = new TachyonURI("/SparkCrawler/" + tid + starttime + "/domains");
 
@@ -76,11 +72,10 @@ public class ConfigLoader {
         }
     }
 
-
-    public List<Tuple2<Text, Crawldb>> load(int depth, String tid, String starttime, int pass, String seedPath, String type) {
+    public List<Tuple2<Text, Crawldb>> load(int depth, String tid, String starttime, int pass, String seedPath, String type,String tachyonUrl) {
         //TODO to use relative path of config file
         //PropertyHelper helper = new PropertyHelper("seedPath");
-        loadSeedConfigFile(seedPath, tid, starttime);
+        loadSeedConfigFile(seedPath, tid, starttime,tachyonUrl);
 
         List<Tuple2<Text, Crawldb>> nextUrls = new ArrayList<Tuple2<Text, Crawldb>>();
         // InMemroySeenUrlFilter seenFilter = new InMemroySeenUrlFilter();
@@ -147,7 +142,7 @@ public class ConfigLoader {
             //JavaSparkContext jsc = OnSparkInstanceFactory.getSparkContext();
 
             /***放入待爬取队列***/
-          /*  OnSparkInstanceFactory.getNextURLQueueInstance().putNextUrls(jsc.parallelizePairs(nextUrls));*/
+            /*  OnSparkInstanceFactory.getNextURLQueueInstance().putNextUrls(jsc.parallelizePairs(nextUrls));*/
 
             // OnSparkInstanceFactory.getRedisToCrawlQue().putNextUrls(jsc.parallelizePairs(nextUrls));
 

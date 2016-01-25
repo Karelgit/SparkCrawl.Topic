@@ -24,9 +24,17 @@
         <processorPath useClasspath="true" />
         <module name="spark.webcrawler" />
       </profile>
+      <profile default="false" name="Annotation profile for SparkCrawl.Topic" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="SparkCrawl.Topic" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="spark.webcrawler" target="1.7" />
+      <module name="SparkCrawl.Topic" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

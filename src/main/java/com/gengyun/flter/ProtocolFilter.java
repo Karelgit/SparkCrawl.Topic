@@ -11,6 +11,7 @@ import scala.Tuple3;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * 协议过滤
@@ -18,6 +19,16 @@ import java.util.HashSet;
  */
 public class ProtocolFilter implements Serializable {
 
+
+    public List<String> getProtocols() {
+        return protocols;
+    }
+
+    public void setProtocols(List<String> protocols) {
+        this.protocols = protocols;
+    }
+
+    private List<String> protocols;
 
     public ProtocolFilter() {
     }
@@ -27,18 +38,21 @@ public class ProtocolFilter implements Serializable {
             @Override
             public Boolean call(Tuple3<Text, Crawldb, HtmlPage> tuple3) throws Exception {
                 if (tuple3 != null) {
-
                     URL url1 = new URL(tuple3._1().toString());
                     if (tuple3._3() == null) {
                         return false;
                     } else {
-
                         if (url1 != null && StringUtils.isNotBlank(url1.toString()) && url1.getProtocol() != null &&
-                                StringUtils.isNotBlank(url1.getProtocol())) {
-                            if (StringUtils.equals(url1.getProtocol(), "http")) {
+                            StringUtils.isNotBlank(url1.getProtocol())) {
+                            boolean flag = false;
+                            for (String protocol : protocols) {
+                                flag = StringUtils.equals(url1.getProtocol(), protocol.substring(0,protocol.indexOf(":"))) || flag;
+                            }
+                            if (flag ==true) {
                                 return true;
-                            } else
+                            } else {
                                 return false;
+                            }
                         } else {
                             return false;
                         }
@@ -58,12 +72,18 @@ public class ProtocolFilter implements Serializable {
             public Boolean call(Tuple2<Text, Crawldb> tuple2) throws Exception {
                 URL url = new URL(tuple2._1().toString());
                 String protocol = url.getProtocol();
+                System.out.println("协议是：" + protocol);
                 String host = url.getHost();
                 if (StringUtils.isNotEmpty(host)) {
-                    if (StringUtils.equals(protocol, "http"))
+                    boolean flag = false;
+                    for(String fiterProtocol : protocols)    {
+                        flag = StringUtils.equals(protocol, fiterProtocol.substring(0,fiterProtocol.indexOf(":"))) || flag;
+                    }
+                    if (flag == true)   {
                         return true;
-                    else
+                    }else   {
                         return false;
+                    }
                 } else
                     return false;
             }

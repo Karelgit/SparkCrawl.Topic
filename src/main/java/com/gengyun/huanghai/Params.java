@@ -10,10 +10,7 @@ import java.util.Map;
  * Created by Administrator on 2015/12/21.
  */
 public class Params {
-
-
     private int k;
-    private int m;
     private int layer;
     private Map<Integer,List<Tag>> tagListBlock;
     private WebClient webClient;
@@ -34,14 +31,6 @@ public class Params {
 
     public void setLayer(int layer) {
         this.layer = layer;
-    }
-
-    public int getM() {
-        return m;
-    }
-
-    public void setM(int m) {
-        this.m = m;
     }
 
     public Map<Integer, List<Tag>> getTagListBlock() {

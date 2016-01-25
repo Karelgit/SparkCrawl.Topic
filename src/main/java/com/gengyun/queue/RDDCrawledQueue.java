@@ -4,7 +4,6 @@ import com.gengyun.entry.OnSparkInstanceFactory;
 import com.gengyun.metainfo.Crawldb;
 import com.gengyun.utils.CommonUtils;
 import com.gengyun.utils.LogManager;
-import com.gengyun.utils.PropertyHelper;
 import org.apache.hadoop.io.Text;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
@@ -22,13 +21,17 @@ import java.io.Serializable;
  */
 public class RDDCrawledQueue implements Serializable {
     private LogManager logger = new LogManager(RDDURLQueue.class);
-    private final static PropertyHelper helper = new PropertyHelper("db");
-    private final static String tachyonUrl = helper.getValue("tachyonUrl");
+    //private final static PropertyHelper helper = new PropertyHelper("db");
+    private  static String tachyonUrl;
+
+    public RDDCrawledQueue(String tachyonUrl) {
+        this.tachyonUrl=tachyonUrl;
+    }
 
     public void putRDD(JavaPairRDD<Text, Crawldb> crawledRDD) throws IOException {
         JavaSparkContext jsc = OnSparkInstanceFactory.getSparkContext();
 
-        if (CommonUtils.exit("/Crawled")) {
+        if (CommonUtils.exit("/Crawled",tachyonUrl)) {
             JavaRDD<Crawldb> fileRDD = jsc.objectFile(tachyonUrl + "/Crawled/current");
             JavaPairRDD<Text, Crawldb> originRDD = fileRDD.mapToPair(new PairFunction<Crawldb, Text, Crawldb>() {
                 @Override
@@ -47,10 +50,10 @@ public class RDDCrawledQueue implements Serializable {
                 }
             }).values().saveAsObjectFile(tmpout.toString());
 
-            if (CommonUtils.exit("/Crawled/current")) {
-                if (CommonUtils.exit("/Crawled/old")) CommonUtils.remove("/Crawled/old");
-                CommonUtils.rename("/Crawled/current", "/Crawled/old");
-                CommonUtils.rename(tmpout.getPath(), "/Crawled/current");
+            if (CommonUtils.exit("/Crawled/current",tachyonUrl)) {
+                if (CommonUtils.exit("/Crawled/old",tachyonUrl)) CommonUtils.remove("/Crawled/old",tachyonUrl);
+                CommonUtils.rename("/Crawled/current", "/Crawled/old",tachyonUrl);
+                CommonUtils.rename(tmpout.getPath(), "/Crawled/current",tachyonUrl);
             }
             /*********end 存储*****/
         } else {

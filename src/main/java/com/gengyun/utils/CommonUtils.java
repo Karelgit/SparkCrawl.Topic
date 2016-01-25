@@ -11,8 +11,8 @@ import java.util.regex.Pattern;
  * Created by hadoop on 2015/11/25.
  */
 public class CommonUtils {
-    private final static PropertyHelper helper = new PropertyHelper("db");
-    private final static String tachyonUrl = helper.getValue("tachyonUrl");
+    //private final static PropertyHelper helper = new PropertyHelper("db");
+   // private final static String tachyonUrl = helper.getValue("tachyonUrl");
     final static Pattern pattern = Pattern.compile("\\S*[?]\\S*");
 
     /**
@@ -40,7 +40,7 @@ public class CommonUtils {
     }
 
 
-    public static void remove(String path) throws IOException {
+    public static void remove(String path,String tachyonUrl) throws IOException {
         TachyonFS tfs = TachyonFS.get(new TachyonURI(tachyonUrl));
         if (tfs.exist(new TachyonURI(path))) {
             tfs.delete(new TachyonURI(path), true);
@@ -48,25 +48,25 @@ public class CommonUtils {
 
     }
 
-    public static void rename(String oldpath, String targetpath) throws IOException {
+    public static void rename(String oldpath, String targetpath,String tachyonUrl) throws IOException {
         TachyonFS tfs = TachyonFS.get(new TachyonURI(tachyonUrl));
         tfs.rename(new TachyonURI(oldpath), new TachyonURI(targetpath));
 
     }
 
-    public static boolean exit(String path) throws IOException {
+    public static boolean exit(String path,String tachyonUrl) throws IOException {
         TachyonFS tfs = TachyonFS.get(new TachyonURI(tachyonUrl));
 
         return tfs.exist(new TachyonURI(path));
 
     }
 
-    public static void lockToCrawl() throws IOException {
+    public static void lockToCrawl(String tachyonUrl) throws IOException {
         TachyonFS tfs = TachyonFS.get(new TachyonURI(tachyonUrl));
         tfs.createFile(new TachyonURI("/toCrawl/.lock"));
     }
 
-    public static void unlockToCrawl() throws IOException {
+    public static void unlockToCrawl(String tachyonUrl) throws IOException {
         TachyonFS tfs = TachyonFS.get(new TachyonURI(tachyonUrl));
         if (tfs.exist(new TachyonURI("/toCrawl/.lock"))) {
             tfs.delete(new TachyonURI("/toCrawl/.lock"), true);

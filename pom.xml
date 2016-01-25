@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.gengyun</groupId>
-    <artifactId>spark.webcrawler</artifactId>
+    <artifactId>sparkcrawl.topic</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>spark.webcrawler</name>
+    <name>sparkcrawl.topic</name>
     <repositories>
         <repository>
             <snapshots>
@@ -164,11 +164,6 @@
         <profile>
             <id>clusterdep</id>
             <properties>
-                <seed.path>/opt/inputConfig.json</seed.path>
-                <db.url>jdbc:mysql://108.108.108.6:3306/test</db.url>
-                <db.table>link</db.table>
-                <mysql.user>root</mysql.user>
-                <mysql.password>root</mysql.password>
                 <tachyon.url>tachyon://108.108.108.15:19998</tachyon.url>
                 <redis.ip>108.108.108.15</redis.ip>
                 <redis.port>6379</redis.port>
@@ -179,7 +174,7 @@
     </profiles>
     <build>
 
-        <finalName>SparkWebCrawler</finalName>
+        <finalName>sparkcrawl.topic</finalName>
 
         <resources>
 
@@ -219,7 +214,6 @@
                     </execution>
                 </executions>
             </plugin>
-
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

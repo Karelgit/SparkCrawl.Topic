@@ -56,13 +56,13 @@ public class RDDRedisToCrawlQue implements Serializable {
         return result;
     }
 
-    public boolean hasMoreUrls(String taskid) {
+    public boolean hasMoreUrls(String taskid,JedisPoolUtils jedisPoolUtils) {
 
-        Jedis jedis = OnSparkInstanceFactory.getJedisPoolUtils().getJedisPool().getResource();
+        Jedis jedis = jedisPoolUtils.getJedisPool().getResource();
         try {
             return jedis.llen("sparkcrawler::ToCrawl::"+taskid) != 0;
         } finally {
-            OnSparkInstanceFactory.getJedisPoolUtils().getJedisPool().returnResource(jedis);
+            jedisPoolUtils.getJedisPool().returnResource(jedis);
         }
 
     }
