@@ -5,7 +5,6 @@ package com.gengyun.urlfilter;
  */
 
 import com.gengyun.metainfo.BaseURL;
-import com.gengyun.metainfo.CrawlDatum;
 import com.gengyun.metainfo.Crawldb;
 import org.apache.hadoop.io.Text;
 import scala.Tuple2;

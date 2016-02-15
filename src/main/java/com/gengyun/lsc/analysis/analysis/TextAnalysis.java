@@ -48,6 +48,7 @@ public class TextAnalysis implements Serializable {
                 long depth = oldCrawldb.getDepthfromSeed();
                 boolean tag = oldCrawldb.isTag();
                 boolean fetched = oldCrawldb.isFetched();
+                String startTime = oldCrawldb.getStarttime();
 
 //                System.out.println("*********url******** :" + url);
                 BaseAnalysisURL oldUrl = new BaseAnalysisURL(url, title, date, html);
@@ -67,6 +68,7 @@ public class TextAnalysis implements Serializable {
                             newCrawdb.setTid(tid);
                             newCrawdb.setPassed(passed);
                             newCrawdb.setType(type);
+                            newCrawdb.setStarttime(startTime);
                             newCrawdb.setUrl(baseAnalysisURL.getUrl());
                             newCrawdb.setText(baseAnalysisURL.getText());
                             newCrawdb.setTitle(baseAnalysisURL.getTitle());

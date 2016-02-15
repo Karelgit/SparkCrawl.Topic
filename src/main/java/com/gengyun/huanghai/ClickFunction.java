@@ -62,6 +62,10 @@ public class ClickFunction implements Serializable {
                     for (String page : pageList) {
                         Crawldb base = new Crawldb();
                         base.setUrl(url);
+                        base.setTid(textCrawldbHtmlPageParamsTuple4._2().getTid());
+                        base.setPassed(textCrawldbHtmlPageParamsTuple4._2().getPassed());
+                        base.setType(textCrawldbHtmlPageParamsTuple4._2().getType());
+                        base.setStarttime(textCrawldbHtmlPageParamsTuple4._2().getStarttime());
                         base.setFromUrl(textCrawldbHtmlPageParamsTuple4._2().getFromUrl());
                         base.setRootUrl(textCrawldbHtmlPageParamsTuple4._2().getRootUrl());
                         base.setDepthfromSeed(textCrawldbHtmlPageParamsTuple4._2().getDepthfromSeed());

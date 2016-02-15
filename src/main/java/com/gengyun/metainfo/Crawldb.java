@@ -18,6 +18,7 @@ public class Crawldb implements /*WritableComparable<Crawldb>,*/ Serializable {
     private String text;
     private String html;
     private String title;
+    private String starttime;
     private long crawltime;
     private long publishtime;
     private long depthfromSeed;
@@ -172,6 +173,15 @@ public class Crawldb implements /*WritableComparable<Crawldb>,*/ Serializable {
     public void setType(String type) {
         this.type = type;
     }
+
+    public String getStarttime() {
+        return starttime;
+    }
+
+    public void setStarttime(String starttime) {
+        this.starttime = starttime;
+    }
+
 
     /*
     @Override

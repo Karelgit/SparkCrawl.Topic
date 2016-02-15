@@ -24,6 +24,7 @@ import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.broadcast.Broadcast;
+import org.apache.spark.sql.*;
 import redis.clients.jedis.Jedis;
 import scala.Tuple2;
 import scala.Tuple3;
@@ -46,11 +47,9 @@ public class OnSparkWorkflowManager implements Serializable {
     //private RDDURLQueue nextQueue = OnSparkInstanceFactory.getNextURLQueueInstance();
     private RDDRedisToCrawlQue nextQueue = OnSparkInstanceFactory.getRedisToCrawlQue();
 
-
     //已抓取队列
     //private RDDCrawledQueue crawledQueue = OnSparkInstanceFactory.getRddCrawledQueue();
     private RDDRedisCrawledQue crawledQueue = OnSparkInstanceFactory.getRddRedisCrawledQue();
-
 
     //下载
     // private HtmlUnitDownload downloadplugin = OnSparkInstanceFactory.getHtmlUnitDownload();
@@ -136,7 +135,7 @@ public class OnSparkWorkflowManager implements Serializable {
         Map data_map = new HashMap<>();
 
         while (shouldContinue(jedisPoolUtils)) {
-            JavaPairRDD<Text, Crawldb> currBatch = nextQueue.nextBatch(jedisPoolUtilsBroadcast, _tidbc);
+            JavaPairRDD<Text, Crawldb> currBatch = nextQueue.nextBatch(jedisPoolUtilsBroadcast, _tidbc).cache();
             depth = ((int)currBatch.toArray().get(0)._2().getDepthfromSeed());
             amount = currBatch.toArray().size();
             JavaRDD<Tuple3<Text, Crawldb, HtmlPage>> downloaded = downloadRDD.download(currBatch);
@@ -150,8 +149,10 @@ public class OnSparkWorkflowManager implements Serializable {
 
             /***************end 动态链接的抽取******************/
 
+
             /*****抽取外链并过滤后缀********/
             JavaPairRDD<Text, Crawldb> baseURLJavaRDD = traverseClickRDD.flatMapToPair(textAnalysis.analysis()).cache();
+
             JavaPairRDD<Text, Crawldb> result = baseURLJavaRDD.filter(new Function<Tuple2<Text, Crawldb>, Boolean>() {
                 @Override
                 public Boolean call(Tuple2<Text, Crawldb> textCrawldbTuple2) throws Exception {
@@ -163,6 +164,7 @@ public class OnSparkWorkflowManager implements Serializable {
                     }
                 }
             });
+
 
             crawledQueue.putRDD(result, jedisPoolUtilsBroadcast, _tidbc);
 
@@ -203,7 +205,7 @@ public class OnSparkWorkflowManager implements Serializable {
             data_map.put("crawlCount",crawler_amount);
             jedis2.hset("sparkcrawl:monitor:" + tid, time.toString(), JSONUtil.object2JacksonString(data_map));
 
-            /*************************************************************************/
+            /********************************************************************************************/
             //PaceKeeper.pause();
         }
 

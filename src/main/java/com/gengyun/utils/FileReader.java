@@ -16,7 +16,9 @@ public class FileReader {
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
         List regexList = new ArrayList<String>();
         for (String line = br.readLine(); line != null; line = br.readLine()) {
-            regexList.add(line);
+            if(!line.startsWith("#"))   {
+                regexList.add(line);
+            }
         }
         br.close();
         return regexList;

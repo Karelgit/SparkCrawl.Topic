@@ -121,6 +121,7 @@ public class ConfigLoader {
 
                 Crawldb crawlDatum = new Crawldb();
                 crawlDatum.setTid(tid);
+                crawlDatum.setStarttime(starttime);
                 crawlDatum.setPassed(pass);
                 crawlDatum.setUrl(seed);
                 crawlDatum.setType(type);

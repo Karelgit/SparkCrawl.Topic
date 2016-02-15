@@ -138,11 +138,10 @@ public class InitSparkConfig {
                 }
             }*/
 
-
             String clickRegexStr = ReadFromTachyon.getfilecontent(fs, clickregexDir);
             String regex[] = clickRegexStr.split("\n");
             for (String s1 : regex) {
-                if(s1 != "")    {
+                if(s1.trim().length() != 0)    {
                     regexList.add(s1.trim());
                 }
             }
@@ -150,7 +149,7 @@ public class InitSparkConfig {
             String protocolStr = ReadFromTachyon.getfilecontent(fs, protocolDir);
             String protocol[] = protocolStr.split("\n");
             for (String s1 : protocol) {
-                if(s1 != "")    {
+                if(s1.trim().length() != 0)    {
                     protocols.add(s1.trim());
                 }
             }
@@ -158,7 +157,7 @@ public class InitSparkConfig {
             String postFixStr = ReadFromTachyon.getfilecontent(fs, postregexDir);
             String postArray[] = postFixStr.split("\n");
             for (String s1 : postArray) {
-                if(s1 != "")    {
+                if(s1.trim().length() != 0)    {
                     postfix.add(s1.trim());
                 }
             }

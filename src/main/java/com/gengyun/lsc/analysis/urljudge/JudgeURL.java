@@ -28,14 +28,14 @@ public class JudgeURL {
         //NAVIGATE
         size = urlNavigateRules.size();
         for (i = 0; i < size; i++) {
-            if ( Pattern.matches(urlNavigateRules.get(i), url)) sort=1;
+            if ( Pattern.matches(urlNavigateRules.get(i), url)) return 1;
         }
 
 
         //ARTICLE
         size = urlArticleRules.size();
         for (i = 0; i < size; i++) {
-            if ( Pattern.matches(urlArticleRules.get(i), url)) sort=-1;
+            if ( Pattern.matches(urlArticleRules.get(i), url)) return -1;
         }
 
 
@@ -45,7 +45,7 @@ public class JudgeURL {
     public static void bindRules() {
         urlArticleRules.add(".*/\\d+.(html|shtml|htm|aspx|xhtml|jhtml)");
         urlArticleRules.add(".*(show|Show|content|Content|article|Article|art|Art).*");
-        urlNavigateRules.add(".*(list|index|Index|class).*");
+        urlNavigateRules.add(".*(list|index|Index|class|ArtList).*");
         urlNavigateRules.add("\\D*");
     }
 

@@ -2,9 +2,7 @@ package com.gengyun.entry;
 
 import com.gengyun.crawler.OnSparkWorkflowManager;
 import com.gengyun.metainfo.Crawldb;
-import com.gengyun.utils.JedisPoolUtils;
 import org.apache.hadoop.io.Text;
-import org.glassfish.grizzly.utils.BufferInputStream;
 import scala.Tuple2;
 
 import java.io.BufferedInputStream;
@@ -28,7 +26,7 @@ public class Crawl {
         String tachyonUrl=properties.getProperty("tachyon.url");
 
 
-        InitSparkConfig sparkConfig = new InitSparkConfig(tid, mode, recalldepth, templatesDir, clickregexDir, protocolDir, postregexDir,tachyonUrl);
+        InitSparkConfig sparkConfig = new InitSparkConfig(tid+starttime, mode, recalldepth, templatesDir, clickregexDir, protocolDir, postregexDir,tachyonUrl);
         OnSparkInstanceFactory.getInstance(sparkConfig,properties);
 
         ConfigLoader configLoader = new ConfigLoader();

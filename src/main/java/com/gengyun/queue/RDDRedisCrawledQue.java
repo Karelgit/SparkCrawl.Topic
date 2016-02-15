@@ -29,7 +29,7 @@ public class RDDRedisCrawledQue implements Serializable {
             public String call(Tuple2<Text, Crawldb> tuple2) throws Exception {
                 return tuple2._2().getUrl();
             }
-        }).repartition(2).foreachPartition(new VoidFunction<Iterator<String>>() {
+        })/*.repartition(2)*/.foreachPartition(new VoidFunction<Iterator<String>>() {
             @Override
             public void call(Iterator<String> datas) throws Exception {
                 List<String> list = Lists.newArrayList(datas);
@@ -39,32 +39,15 @@ public class RDDRedisCrawledQue implements Serializable {
                         hashcodes[2 * i] = "sparkcrawler::Crawled::" + taskid.value() + "::" + String.valueOf(list.get(i).hashCode());
                         hashcodes[2 * i + 1] = String.valueOf(list.get(i).hashCode());
                     }
+
+                    Jedis jedis = broadcast.value().getJedisPool().getResource();
+                    jedis.select(1);
+                    jedis.mset(hashcodes);
+                    broadcast.value().getJedisPool().returnResource(jedis);
                 }
 
-                Jedis jedis = broadcast.value().getJedisPool().getResource();
-                jedis.select(1);
-                jedis.mset(hashcodes);
-                broadcast.value().getJedisPool().returnResource(jedis);
+
             }
         });
-
-/*
-
-        crawledRDD.repartition(2);
-        crawledRDD.foreachPartition(new VoidFunction<Iterator<Tuple2<Text, Crawldb>>>() {
-            @Override
-            public void call(Iterator<Tuple2<Text, Crawldb>> tuple2) throws Exception {
-                Jedis jedis = new Jedis("108.108.108.15", 6379, 60000);
-                jedis.select(1);
-
-
-                while (tuple2.hasNext()) {
-                    Crawldb crawldb = tuple2.next()._2();
-                    jedis.set(String.valueOf(crawldb.getUrl().hashCode()), String.valueOf(crawldb.getUrl().hashCode()));
-                }
-
-            }
-        });*/
-
     }
 }

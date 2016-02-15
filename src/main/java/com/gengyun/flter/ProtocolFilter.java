@@ -10,7 +10,6 @@ import scala.Tuple3;
 
 import java.io.Serializable;
 import java.net.URL;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -72,7 +71,6 @@ public class ProtocolFilter implements Serializable {
             public Boolean call(Tuple2<Text, Crawldb> tuple2) throws Exception {
                 URL url = new URL(tuple2._1().toString());
                 String protocol = url.getProtocol();
-                System.out.println("协议是：" + protocol);
                 String host = url.getHost();
                 if (StringUtils.isNotEmpty(host)) {
                     boolean flag = false;

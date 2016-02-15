@@ -44,7 +44,6 @@ public class recursive_width {
         String[] xpathArray = tagList.get(t).getXpath().split("\\|");
         HtmlPage page = null;
         for (int i = 0; i < xpathArray.length; i++) {
-            // System.out.println(xpathArray[i].toString());
             if (!xpathArray[i].isEmpty()) {
                 HtmlElement element = (HtmlElement) hp.getByXPath(xpathArray[i]).get(0);
                 try {
@@ -120,7 +119,7 @@ public class recursive_width {
                 MinHashCompare minHashCompare = new MinHashCompare();
                 Document inner_doc = Jsoup.parse(pageList.get(i));
                 try {
-                    uniqueFlag = uniqueFlag && !minHashCompare.isHtmlSimilar(inner_doc,doc,0.9999f);
+                    uniqueFlag = uniqueFlag && !minHashCompare.isHtmlSimilar(inner_doc,doc,0.999f);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -219,7 +218,7 @@ public class recursive_width {
 //        String url = "http://www.duyun.gov.cn/fzlm/hdmb/xxgkml/xxgklb/index.shtml?organId=2,082&id=1";
         //贵州发改委
 //        String url = "http://www.gzdpc.gov.cn/col/col406/index.html";
-        String url = "http://www.gzdpc.gov.cn/col/col397/index.html";
+        String url = "http://www.qxn.gov.cn/OrgArtList/QxnGov.XMJ/QxnGov.XMJ.File/1.html";
 //        String url = "http://www.gzdpc.gov.cn/col/col406/index.html";
         WebClient webClient = new WebClient(BrowserVersion.CHROME);
         webClient.getOptions().setThrowExceptionOnScriptError(false);

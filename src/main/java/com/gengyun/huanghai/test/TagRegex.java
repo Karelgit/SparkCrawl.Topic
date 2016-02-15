@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 public class TagRegex {
     public static void main(String[] args) throws Exception{
         LogFactory.getFactory().setAttribute("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
-        String url = "http://www.gzdpc.gov.cn/col/col406/index.html";
+        String url = "http://www.qxn.gov.cn/OrgArtList/QxnGov.XMJ/QxnGov.XMJ.Info/1.html";
         WebClient webClient = new WebClient(BrowserVersion.CHROME);
         webClient.getOptions().setThrowExceptionOnScriptError(false);
         webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);

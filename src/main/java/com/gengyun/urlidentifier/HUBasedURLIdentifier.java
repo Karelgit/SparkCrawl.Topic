@@ -1,10 +1,8 @@
 package com.gengyun.urlidentifier;
 
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gengyun.metainfo.BaseURL;
 import com.gengyun.metainfo.CrawlDatum;
 import com.gengyun.metainfo.Crawldb;
-import com.gengyun.metainfo.HtmlUnitDocWebPage;
 import com.gengyun.utils.CommonUtils;
 import com.gengyun.utils.LogManager;
 import org.apache.hadoop.io.Text;

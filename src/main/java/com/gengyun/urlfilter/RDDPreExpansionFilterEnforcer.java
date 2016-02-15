@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import com.gengyun.metainfo.BaseURL;
-import com.gengyun.metainfo.CrawlDatum;
 import com.gengyun.metainfo.Crawldb;
 import com.gengyun.utils.LogManager;
 import org.apache.hadoop.io.Text;

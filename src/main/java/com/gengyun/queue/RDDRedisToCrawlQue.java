@@ -75,7 +75,7 @@ public class RDDRedisToCrawlQue implements Serializable {
                 return JSONUtil.object2JacksonString(tuple2._2());
             }
         });
-        data.repartition(2);
+//        data.repartition(2);
 
         data.foreachPartition(new VoidFunction<Iterator<String>>() {
             @Override

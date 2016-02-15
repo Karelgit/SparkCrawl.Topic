@@ -70,7 +70,6 @@ public class OnSparkInstanceFactory {
 
     private static SparkConf sparkConf;
     private static JavaSparkContext sparkContext;
-
     private static ClickFunction clickFunction;
 
     private static RDDPreExpansionFilterEnforcer rddPreExpansionFilterEnforcer = new RDDPreExpansionFilterEnforcer();

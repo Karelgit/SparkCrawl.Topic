@@ -45,7 +45,7 @@ public class CreateTemplate {
         String html;
         String url;
 
-        File inputFile = new File("/opt/IdeaProjects/gengyun/SparkWebCrawler/data/tempin.txt");
+        File inputFile = new File("/opt/IDEAProject/SparkWebCrawler/data/tempin.txt");
         BufferedReader htmlReader = new BufferedReader(new FileReader(inputFile));
         while ((url = htmlReader.readLine()) != null) {
             System.out.println(url);
@@ -79,13 +79,13 @@ public class CreateTemplate {
         String templateDomain;
 
         //从模版库中读取已有模版文件
-        File file = new File("/opt/IdeaProjects/gengyun/SparkWebCrawler/templates");
+        File file = new File("/opt/IDEAProject/SparkWebCrawler/templates");
         if (!file.exists() && !file.isDirectory()) {
             file.mkdir();
         }
 
 
-        File templatesParentFile = new File("/opt/IdeaProjects/gengyun/SparkWebCrawler/templates/");
+        File templatesParentFile = new File("/opt/IDEAProject/SparkWebCrawler/templates/");
         File[] templateFiles = templatesParentFile.listFiles();
         if (templateFiles.length > 0) {
             for (File templateFile : templateFiles) {
@@ -104,7 +104,7 @@ public class CreateTemplate {
 
             }
         }
-        updateTemplate(newTokens, new File("/opt/IdeaProjects/gengyun/SparkWebCrawler/templates/" + domain + sdf.format(new Date()) + ".txt"), domain);
+        updateTemplate(newTokens, new File("/opt/IDEAProject/SparkWebCrawler/templates/" + domain + sdf.format(new Date()) + ".txt"), domain);
         return;
     }
 

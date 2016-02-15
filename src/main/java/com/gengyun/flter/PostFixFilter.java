@@ -1,6 +1,5 @@
 package com.gengyun.flter;
 
-import com.gengyun.metainfo.CrawlDatum;
 import com.gengyun.metainfo.Crawldb;
 import org.apache.hadoop.io.Text;
 import org.apache.spark.api.java.function.Function;

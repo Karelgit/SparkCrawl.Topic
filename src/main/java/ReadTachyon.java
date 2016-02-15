@@ -7,8 +7,6 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.PairFunction;
 import scala.Tuple2;
 
-import java.util.Properties;
-
 /**
  * Created by root on 15-12-11.
  */

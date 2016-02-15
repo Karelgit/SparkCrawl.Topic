@@ -4,7 +4,6 @@ import com.gargoylesoftware.htmlunit.*;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gengyun.entry.InstanceFactory;
 import com.gengyun.metainfo.BaseWebPage;
-import com.gengyun.metainfo.CrawlDatum;
 import com.gengyun.metainfo.Crawldb;
 import com.gengyun.metainfo.HtmlUnitDocWebPage;
 import org.apache.commons.lang3.StringUtils;
@@ -13,7 +12,6 @@ import org.apache.spark.api.java.function.Function;
 import scala.Tuple2;
 import scala.Tuple3;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
 import java.net.UnknownHostException;

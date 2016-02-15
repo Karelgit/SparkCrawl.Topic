@@ -8,8 +8,6 @@ import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.*;
-import org.apache.spark.deploy.SparkSubmit;
-import org.apache.spark.deploy.SparkSubmitUtils;
 import redis.clients.jedis.Jedis;
 import scala.Tuple2;
 

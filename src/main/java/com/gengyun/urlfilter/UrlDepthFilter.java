@@ -1,10 +1,7 @@
 package com.gengyun.urlfilter;
 
-import com.gengyun.entry.OnSparkInstanceFactory;
 import com.gengyun.metainfo.BaseURL;
-import com.gengyun.metainfo.CrawlDatum;
 import com.gengyun.metainfo.Crawldb;
-import com.gengyun.utils.CommonUtils;
 import com.gengyun.utils.LogManager;
 import org.apache.hadoop.io.Text;
 import scala.Tuple2;
