@@ -127,17 +127,6 @@ public class InitSparkConfig {
 
             setListTemplate(listTemplate);
 
-            /*List<ClientFileInfo> clickregexdir = tfs.listStatus(new TachyonURI(clickregexDir));
-            if (clickregexdir != null) {
-                for (ClientFileInfo clickregexFile : clickregexdir) {
-                    TachyonFile file = tfs.getFile(new TachyonURI(clickregexFile.getPath()));
-                    InStream in = file.getInStream(ReadType.CACHE);
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                    while ((str = reader.readLine()) != null) regexList.add(str);
-                    reader.close();
-                }
-            }*/
-
             String clickRegexStr = ReadFromTachyon.getfilecontent(fs, clickregexDir);
             String regex[] = clickRegexStr.split("\n");
             for (String s1 : regex) {

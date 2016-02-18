@@ -163,7 +163,7 @@ public class OnSparkWorkflowManager implements Serializable {
                         return false;
                     }
                 }
-            });
+            }).cache();
 
 
             crawledQueue.putRDD(result, jedisPoolUtilsBroadcast, _tidbc);
